@@ -1,6 +1,6 @@
 # Unity-CustomDynamicFont
 
-A simple bare-bone sample which demonstrates the usage of Unity3D's dynamic font renderer for ones own dynamic font rendering system. It is written due to the lack of sample code on [Unity3D's official document](http://docs.unity3d.com/ScriptReference/) about the dynamic font renderer and its related APIs.
+A simple bare-bone sample which demonstrates the usage of Unity3D's dynamic font renderer to write ones own dynamic font rendering system. It is written due to the lack of sample code on [Unity3D's official document](http://docs.unity3d.com/ScriptReference/) about the dynamic font renderer and its related APIs.
 
 
 ![Dynamic Font Rendereing](./Images/screenshot02.png "Dynamic Font Rendereing")

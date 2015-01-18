@@ -13,6 +13,6 @@ License
 
 This code is distributed under the terms and conditions of the MIT license.
 
-The [Daum font](http://www.daumkakao.com/main) files are used render the sample text. The license of that follow theirs.
+The [Daum font](http://www.daumkakao.com/main) files are used to render the sample text. The license of that follows theirs.
 
 Copyright (c) 2013 Kim, Hyoun Woo

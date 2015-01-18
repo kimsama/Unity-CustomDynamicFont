@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// A class which to show minimum code to render dynamic font mesh.
+/// </summary>
 public class DynamicFont : MonoBehaviour 
 {
     public Font dynamicFont;
@@ -13,16 +16,14 @@ public class DynamicFont : MonoBehaviour
 
     public bool UseDynamicFont { get { return (dynamicFont != null); } }
 
-    int mSpacingX = 0;
-    int mSpacingY = 0;
-
-    List<Color> mColors = new List<Color>();
+    public int SpacingX = 0;
+    public int SpacingY = 0;
 
     List<Vector3> verts = new List<Vector3>();
     List<Vector2> uvs = new List<Vector2>();
     List<Color32> cols = new List<Color32>();
 
-
+    // need to render the text with font mesh.
     MeshFilter meshFilter = null;
     Mesh mesh = null;
 
@@ -42,25 +43,23 @@ public class DynamicFont : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        Print(text, new Color(1f,1f, 1f, 1f), verts, uvs, cols);
-
+        PutText(text, verts, uvs);
         UpdateMesh();
 
 	}
 
-    void Print(string text, Color32 color, List<Vector3> verts, List<Vector2> uvs, List<Color32> cols)
+    /// <summary>
+    /// create the image of the given text on the texture file and retrieves vetices and uvs to make font mesh.
+    /// </summary>
+    void PutText(string text, List<Vector3> verts, List<Vector2> uvs)
     {
         if (text != null)
         {
             if (!UseDynamicFont)
                 return;
 
-            //RgisterFont(this);
             if (UseDynamicFont)
                 dynamicFont.RequestCharactersInTexture(text, dynamicFontSize, dynamicFontStyle);
-
-            mColors.Clear();
-            mColors.Add(color);
 
             Vector2 scale = dynamicFontSize > 0 ? new Vector2(1f / dynamicFontSize, 1f / dynamicFontSize) : Vector2.one;
 
@@ -69,11 +68,9 @@ public class DynamicFont : MonoBehaviour
 			int x = 0;
 			int y = 0;
 			int prev = 0;
-            int lineHeight = (dynamicFontSize + mSpacingY);
+            int lineHeight = (dynamicFontSize + SpacingY);
 			Vector3 v0 = Vector3.zero, v1 = Vector3.zero;
 			Vector2 u0 = Vector2.zero, u1 = Vector2.zero;
-			//float invX = uvRect.width / mFont.texWidth;
-			//float invY = mUVRect.height / mFont.texHeight;
 			int textLength = text.Length;
 
             for (int i = 0; i < textLength; ++i)
@@ -114,10 +111,10 @@ public class DynamicFont : MonoBehaviour
                 u1.x = charInfo.uv.xMax;
                 u1.y = charInfo.uv.yMax;
 
-                x += mSpacingX + (int)charInfo.width;
+                x += SpacingX + (int)charInfo.width;
 
-                for (int b = 0; b < 4; ++b) cols.Add(color);
-
+                // if the character's width is larger than the height, 
+                // we should flip the character with its uvs.
                 if (charInfo.flipped)
                 {
                     //swap entries
@@ -143,6 +140,9 @@ public class DynamicFont : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Update font mesh which is rendered on the screen.
+    /// </summary>
     void UpdateMesh()
     {
         this.mesh.vertices = verts.ToArray();
